@@ -32,7 +32,7 @@ public class GlobalExceptionRestController extends ResponseEntityExceptionHandle
         Response response = new Response(status.toString(),
                 "Validation Failed",details);
 
-        return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity(response, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler({Exception.class})
@@ -41,6 +41,20 @@ public class GlobalExceptionRestController extends ResponseEntityExceptionHandle
                 exception.getMessage(),null);
         return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
+//    @ExceptionHandler(Exception.class)
+//    public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
+//        List<String> details = new ArrayList<>();
+//        details.add(ex.getLocalizedMessage());
+//        ErrorResponse error = new ErrorResponse("Server Error", details);
+//        return new ResponseEntity(error, HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
+//
+//    @ExceptionHandler(RecordNotFoundException.class)
+//    public final ResponseEntity<Object> handleUserNotFoundException(RecordNotFoundException ex, WebRequest request) {
+//        List<String> details = new ArrayList<>();
+//        details.add(ex.getLocalizedMessage());
+//        ErrorResponse error = new ErrorResponse("Record Not Found", details);
+//        return new ResponseEntity(error, HttpStatus.NOT_FOUND);
+//    }
 
 }
