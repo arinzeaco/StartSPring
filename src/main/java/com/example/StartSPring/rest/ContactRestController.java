@@ -2,6 +2,8 @@ package com.example.StartSPring.rest;
 
 
 import com.example.StartSPring.repository.ContactRepository;
+import com.example.StartSPring.repository.PersonRepository;
+import com.example.StartSPring.repository.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -19,6 +21,9 @@ import java.util.stream.StreamSupport;
 public class ContactRestController {
     @Autowired
     ContactRepository contactRepository;
+
+    @Autowired
+    PersonRepository personRepository;
     @GetMapping(value = "/getAllContact")
     public ResponseEntity<Response> getcontact() {
         Iterable<Contact> holidays = contactRepository.findAll();
@@ -38,26 +43,26 @@ public class ContactRestController {
                 .body(response);
     }
 
-    @PostMapping(value = "/saveMsg")
-    public ResponseEntity<Response> saveMsg(
-            @Valid @RequestBody Contact contact){
+    
+    @PostMapping(value = "/addPerson")
+    public ResponseEntity<Response> addPerson(
+            @Valid @RequestBody Person person){
 //        log.info("Header_invocationFrom", "holidays.hdc()");
 //        System.out.println("Exception while logging outgoing response");
 //
 ////        log.info(String.format("Header invocationFrom = %s", invocationFrom));
-//        contact.setStatus("Open");
-////        Contact savedContact = contactRepository.save(contact);
-//        if(null != savedContact && savedContact.getContactId()>0) {
-//
-//            Response response = new Response();
-//            response.setStatusCode("200");
-//            response.setStatusMsg("Message saved successfully");
-//            response.setData(contact);
-//            return ResponseEntity
-//                    .status(HttpStatus.CREATED)
-//                    .header("isMsgSaved", "true")
-//                    .body(response);
-//        }
+        Person savedPerson = personRepository.save(person);
+        if(null != savedPerson) {
+
+            Response response = new Response();
+            response.setStatusCode("200");
+            response.setStatusMsg("Message saved successfully");
+            response.setData(person);
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .header("isMsgSaved", "true")
+                    .body(response);
+        }
         Response response = new Response();
         response.setStatusCode("400");
         return ResponseEntity
@@ -65,5 +70,6 @@ public class ContactRestController {
                 .header("isMsgSaved", "true")
                 .body(response);
     }
+
 
 }
