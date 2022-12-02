@@ -1,8 +1,9 @@
-package com.example.StartSPring.rest;
+package com.example.StartSPring.model;
 
 
 import com.example.StartSPring.annotation.FieldsValueMatch;
 import com.example.StartSPring.annotation.PasswordValidator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -30,7 +31,7 @@ import java.util.Set;
                 message = "Email addresses do not match!"
         )
 })
-public class Person extends BaseEntity{
+public class Person extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO,generator="native")
@@ -52,16 +53,19 @@ public class Person extends BaseEntity{
     @NotBlank(message="Confirm Email must not be blank")
     @Email(message = "Please provide a valid confirm email address" )
     @Transient
+    @JsonIgnore
     private String confirmEmail;
 
     @NotBlank(message="Password must not be blank")
     @Size(min=5, message="Password must be at least 5 characters long")
     @PasswordValidator
+    @JsonIgnore
     private String pwd;
 
     @NotBlank(message="Confirm Password must not be blank")
     @Size(min=5, message="Confirm Password must be at least 5 characters long")
     @Transient
+    @JsonIgnore
     private String confirmPwd;
 
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST, targetEntity = Roles.class)
@@ -70,7 +74,7 @@ public class Person extends BaseEntity{
 
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL, targetEntity = Address.class)
     @JoinColumn(name = "address_id", referencedColumnName = "addressId",nullable = true)
-    private Address address;
+    private com.example.StartSPring.rest.Address address;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "class_id", referencedColumnName = "classId", nullable = true)

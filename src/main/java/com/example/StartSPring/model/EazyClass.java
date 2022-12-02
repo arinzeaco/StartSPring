@@ -1,7 +1,5 @@
-package com.example.StartSPring.rest;
+package com.example.StartSPring.model;
 
-import com.example.StartSPring.rest.BaseEntity;
-import com.example.StartSPring.rest.Person;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;

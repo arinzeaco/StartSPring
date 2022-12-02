@@ -8,8 +8,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableJpaRepositories("com.example.StartSPring.repository")
-@EntityScan("com.example.StartSPring.rest")
+@EntityScan("com.example.StartSPring.model")
 @EnableJpaAuditing(auditorAwareRef = "auditAwareImpl")
+
 public class StartSPringApplication {
 
 	public static void main(String[] args) {

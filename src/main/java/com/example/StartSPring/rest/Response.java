@@ -1,4 +1,4 @@
-package com.example.StartSPring.repository;
+package com.example.StartSPring.rest;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

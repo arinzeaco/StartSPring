@@ -1,12 +1,12 @@
 package com.example.StartSPring.rest;
 
 
-import com.example.StartSPring.repository.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -42,6 +42,22 @@ public class GlobalExceptionRestController extends ResponseEntityExceptionHandle
                 exception.getMessage(),null);
         return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        String error = "Malformed JSON request";
+        Response response = new Response("400",
+                error,null);
+        return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
+
+
+//    @ExceptionHandler({Exception.class})
+//    public ResponseEntity<Response> handleMethodArgumentNotValid(Exception exception){
+//        Response response = new Response("500",
+//                exception.getMessage(),null);
+//        return new ResponseEntity(response, HttpStatus.BAD_REQUEST);
+//    }
 //    @ExceptionHandler(Exception.class)
 //    public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
 //        List<String> details = new ArrayList<>();

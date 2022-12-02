@@ -24,11 +24,11 @@ public class ProjectSecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
-            http.csrf()
-                .ignoringAntMatchers("/apik/**").and()
-                .authorizeRequests()
-                .mvcMatchers("/api/**").permitAll()
-                    .antMatchers("/api/contact/saveMsg").permitAll()
+            http.csrf().disable()
+                    .authorizeRequests()
+                    .antMatchers("/api/contact/saveMsg").authenticated()
+                    .antMatchers("/api/contact/getAllContact").permitAll()
+//                    .antMatchers("/api/person/login").permitAll()
                     .mvcMatchers("/home").permitAll()
 
                 .and().httpBasic();
