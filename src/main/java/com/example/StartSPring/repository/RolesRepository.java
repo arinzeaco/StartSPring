@@ -1,4 +1,4 @@
-package com.example.StartSPring.rest;
+package com.example.StartSPring.repository;
 
 import com.example.StartSPring.model.Roles;
 import org.springframework.data.jpa.repository.JpaRepository;

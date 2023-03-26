@@ -3,7 +3,6 @@ package com.example.StartSPring.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -26,8 +25,10 @@ public class ProjectSecurityConfig {
 
             http.csrf().disable()
                     .authorizeRequests()
+
                     .antMatchers("/api/contact/saveMsg").authenticated()
                     .antMatchers("/api/contact/getAllContact").permitAll()
+                    .antMatchers("/api/person/login").permitAll()
 //                    .antMatchers("/api/person/login").permitAll()
                     .mvcMatchers("/home").permitAll()
 

@@ -4,7 +4,6 @@ import com.example.StartSPring.model.Person;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
 
 /*
 @Repository stereotype annotation is used to add a bean of this class
@@ -15,7 +14,7 @@ DB related operations and
 public interface PersonRepository extends CrudRepository<Person, Integer> {
 
 
-    Person findByEmailAndPwd(String email, String password);
+    Person readByEmail(String email);
 
 
 }

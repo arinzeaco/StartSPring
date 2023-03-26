@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,21 +36,27 @@ public class GlobalExceptionRestController extends ResponseEntityExceptionHandle
 
         return new ResponseEntity(response, HttpStatus.UNAUTHORIZED);
     }
-
-    @ExceptionHandler({Exception.class})
-    public ResponseEntity<Response> exceptionHandler(Exception exception){
-        Response response = new Response("500",
-                exception.getMessage(),null);
-        return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    @Override
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        String error = "Malformed JSON request";
+    @ExceptionHandler(UserNotFoundException.class)
+    public final ResponseEntity<Response> handleUserNotFoundException(Exception exception, WebRequest request) throws Exception {
         Response response = new Response("400",
-                error,null);
-        return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+                exception.getMessage(),request.getDescription(false));
+        return new ResponseEntity(response, HttpStatus.NOT_FOUND);
 
     }
+    @ExceptionHandler({Exception.class})
+    public ResponseEntity<Response> exceptionHandler(Exception exception,WebRequest request){
+        Response response = new Response("500",
+                exception.getMessage(),request.getDescription(false));
+        return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+//    @Override
+//    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+//        String error = "Malformed JSON request";
+//        Response response = new Response("400",
+//                error,request.getDescription(false));
+//        return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
+//
+//    }
 
 
 //    @ExceptionHandler({Exception.class})
